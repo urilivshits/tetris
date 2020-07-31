@@ -419,7 +419,7 @@ $("#speedDown").click(() => {
     }
 });
 
-$("#left").click(() => {
+$("#left").on("touchstart", () => {
     if (tetris[elements].selfCollisionLeft()) {
         return;
     }
@@ -432,7 +432,7 @@ $("#left").click(() => {
     }
 });
 
-$("#right").click(() => {
+$("#right").on("touchstart", () => {
     if (tetris[elements].selfCollisionRight()) {
         return;
     }
