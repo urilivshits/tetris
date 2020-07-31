@@ -445,7 +445,7 @@ $("#right").click(() => {
     }
 });
 
-$("#turn").click(() => {
+$("#turn").on("touchstart", () => {
     if (tetris[elements].selfCollisionRight() || tetris[elements].selfCollisionLeft()) {
         return;
     }
