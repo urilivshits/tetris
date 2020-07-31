@@ -446,7 +446,7 @@ $("#left").on("touchstart", (e) => {
                 // tetris[elements].collisionContainer = [];        
             }
         }, time);
-    }, 300);   
+    }, 100);   
 });
 
 $("#left").on("touchend", () => {
@@ -478,7 +478,7 @@ $("#right").on("touchstart", () => {
             // tetris[elements].collisionContainer = [];
             }
         }, time);
-    }, 300);   
+    }, 100);   
 });
 
 $("#right").on("touchend", () => {
