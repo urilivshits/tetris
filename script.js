@@ -420,29 +420,41 @@ $("#speedDown").click(() => {
 });
 
 $("#left").on("touchstart", () => {
-    if (tetris[elements].selfCollisionLeft()) {
-        return;
-    }
-    if (tetris[elements].wallCollisionLeft()) {
-        return;
-    }
-    else {
-        tetris[elements].segments.map(value => value.col--);
-        // tetris[elements].collisionContainer = [];        
-    }
+    leftInterval = setInterval(() => {
+        if (tetris[elements].selfCollisionLeft()) {
+            return;
+        }
+        if (tetris[elements].wallCollisionLeft()) {
+            return;
+        }
+        else {
+            tetris[elements].segments.map(value => value.col--);
+            // tetris[elements].collisionContainer = [];        
+        }
+    }, time);
+});
+
+$("#left").on("touchend", () => {
+    clearInterval(leftInterval);
 });
 
 $("#right").on("touchstart", () => {
-    if (tetris[elements].selfCollisionRight()) {
-        return;
-    }
-    if (tetris[elements].wallCollisionRight()) {
-        return;
-    }
-    else {
-    tetris[elements].segments.map(value => value.col++);
-    // tetris[elements].collisionContainer = [];
-    }
+    rightInterval = setInterval(() => {
+        if (tetris[elements].selfCollisionRight()) {
+            return;
+        }
+        if (tetris[elements].wallCollisionRight()) {
+            return;
+        }
+        else {
+        tetris[elements].segments.map(value => value.col++);
+        // tetris[elements].collisionContainer = [];
+        }
+    }, time);
+});
+
+$("#right").on("touchend", () => {
+    clearInterval(rightInterval);
 });
 
 $("#turn").on("touchstart", () => {
