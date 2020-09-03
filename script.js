@@ -422,7 +422,10 @@ $("#speedDown").click(() => {
 var leftInterval;
 var rightInterval;
 
-$("#left").on("touchstart mousedown", (e) => {
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+
+$("#left").on("touchstart", (e) => {
+    // e.preventDefault();
     if (tetris[elements].selfCollisionLeft()) {
         return;
     }
@@ -449,12 +452,12 @@ $("#left").on("touchstart mousedown", (e) => {
     }, 100);   
 });
 
-$("#left").on("touchend mouseup", () => {
+$("#left").on("touchend", () => {
     clearInterval(leftInterval);
     clearTimeout(touchTimeCheck);
 });
 
-$("#right").on("touchstart mousedown", () => {
+$("#right").on("touchstart", () => {
     if (tetris[elements].selfCollisionRight()) {
         return;
     }
@@ -481,12 +484,12 @@ $("#right").on("touchstart mousedown", () => {
     }, 100);   
 });
 
-$("#right").on("touchend mouseup", () => {
+$("#right").on("touchend", () => {
     clearInterval(rightInterval);
     clearTimeout(touchTimeCheck);
 });
 
-$("#turn").on("touchstart mousedown", () => {
+$("#turn").on("touchstart", () => {
     if (tetris[elements].selfCollisionRight() || tetris[elements].selfCollisionLeft()) {
         return;
     }
@@ -566,6 +569,156 @@ $("#turn").on("touchstart mousedown", () => {
         position = 0;
     }
 });
+
+}
+
+else {
+    $("#left").on("mousedown", (e) => {
+        // e.preventDefault();
+        if (tetris[elements].selfCollisionLeft()) {
+            return;
+        }
+        if (tetris[elements].wallCollisionLeft()) {
+            return;
+        }
+        else {
+            tetris[elements].segments.map(value => value.col--);
+            // tetris[elements].collisionContainer = [];        
+        }
+        touchTimeCheck = setTimeout (() => {
+            leftInterval = setInterval(() => {
+                if (tetris[elements].selfCollisionLeft()) {
+                    return;
+                }
+                if (tetris[elements].wallCollisionLeft()) {
+                    return;
+                }
+                else {
+                    tetris[elements].segments.map(value => value.col--);
+                    // tetris[elements].collisionContainer = [];        
+                }
+            }, time);
+        }, 100);   
+    });
+    
+    $("#left").on("mouseup", () => {
+        clearInterval(leftInterval);
+        clearTimeout(touchTimeCheck);
+    });
+
+    $("#right").on("mousedown", () => {
+        if (tetris[elements].selfCollisionRight()) {
+            return;
+        }
+        if (tetris[elements].wallCollisionRight()) {
+            return;
+        }
+        else {
+        tetris[elements].segments.map(value => value.col++);
+        // tetris[elements].collisionContainer = [];
+        }
+        touchTimeCheck = setTimeout (() => {
+            rightInterval = setInterval(() => {
+                if (tetris[elements].selfCollisionRight()) {
+                    return;
+                }
+                if (tetris[elements].wallCollisionRight()) {
+                    return;
+                }
+                else {
+                tetris[elements].segments.map(value => value.col++);
+                // tetris[elements].collisionContainer = [];
+                }
+            }, time);
+        }, 100);   
+    });
+    
+    $("#right").on("mouseup", () => {
+        clearInterval(rightInterval);
+        clearTimeout(touchTimeCheck);
+    });
+    
+    $("#turn").on("mousedown", () => {
+        if (tetris[elements].selfCollisionRight() || tetris[elements].selfCollisionLeft()) {
+            return;
+        }
+        if (tetris[elements].wallCollisionTurn()) {
+            return;
+        }
+        if (position === 0) {
+            if (tetris[elements].segments[0].color === "blue") {
+                linePosition1();
+            }
+            else if (tetris[elements].segments[0].color === "green") {
+                centerPosition1();
+            }
+            else if (tetris[elements].segments[0].color === "orange" || tetris[elements].segments[0].color === "red") {
+                lightningPosition1();
+            }
+            else if (tetris[elements].segments[0].color === "purple") {
+                lShape1Position1();
+            }
+            else if (tetris[elements].segments[0].color === "yellow") {
+                lShape2Position1();
+            }
+            position = 1;
+        }
+        else if (position === 1) {
+            if (tetris[elements].segments[0].color === "blue") {
+                linePosition2();
+            }
+            else if (tetris[elements].segments[0].color === "green") {
+                centerPosition2();
+            }
+            else if (tetris[elements].segments[0].color === "orange" || tetris[elements].segments[0].color === "red") {
+                lightningPosition2();
+            }
+            else if (tetris[elements].segments[0].color === "purple") {
+                lShape1Position2();
+            }
+            else if (tetris[elements].segments[0].color === "yellow") {
+                lShape2Position2();
+            }
+            position = 2;
+        }
+        else if (position === 2) {
+            if (tetris[elements].segments[0].color === "blue") {
+                linePosition3();
+            }
+            else if (tetris[elements].segments[0].color === "green") {
+                centerPosition3();
+            }
+            else if (tetris[elements].segments[0].color === "orange" || tetris[elements].segments[0].color === "red") {
+                lightningPosition1();
+            }
+            else if (tetris[elements].segments[0].color === "purple") {
+                lShape1Position3();
+            }
+            else if (tetris[elements].segments[0].color === "yellow") {
+                lShape2Position3();
+            }
+            position = 3;
+        }
+        else if (position === 3) {
+            if (tetris[elements].segments[0].color === "blue") {
+                linePosition0();
+            }
+            else if (tetris[elements].segments[0].color === "green") {
+                centerPosition0();
+            }
+            else if (tetris[elements].segments[0].color === "orange" || tetris[elements].segments[0].color === "red") {
+                lightningPosition2();
+            }
+            else if (tetris[elements].segments[0].color === "purple") {
+                lShape1Position0();
+            }
+            else if (tetris[elements].segments[0].color === "yellow") {
+                lShape2Position0();
+            }
+            position = 0;
+        }
+    });
+}
 
 linePosition1 = () => {
     tetris[elements].segments[0].col = tetris[elements].segments[0].col + 1;
