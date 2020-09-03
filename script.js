@@ -422,7 +422,7 @@ $("#speedDown").click(() => {
 var leftInterval;
 var rightInterval;
 
-$("#left").on("touchstart", (e) => {
+$("#left").on("touchstart mousedown", (e) => {
     if (tetris[elements].selfCollisionLeft()) {
         return;
     }
@@ -449,12 +449,12 @@ $("#left").on("touchstart", (e) => {
     }, 100);   
 });
 
-$("#left").on("touchend", () => {
+$("#left").on("touchend mouseup", () => {
     clearInterval(leftInterval);
     clearTimeout(touchTimeCheck);
 });
 
-$("#right").on("touchstart", () => {
+$("#right").on("touchstart mousedown", () => {
     if (tetris[elements].selfCollisionRight()) {
         return;
     }
@@ -481,12 +481,12 @@ $("#right").on("touchstart", () => {
     }, 100);   
 });
 
-$("#right").on("touchend", () => {
+$("#right").on("touchend mouseup", () => {
     clearInterval(rightInterval);
     clearTimeout(touchTimeCheck);
 });
 
-$("#turn").on("touchstart", () => {
+$("#turn").on("touchstart mousedown", () => {
     if (tetris[elements].selfCollisionRight() || tetris[elements].selfCollisionLeft()) {
         return;
     }
@@ -819,3 +819,4 @@ lShape2Position0 = () => {
     tetris[elements].segments[3].col = tetris[elements].segments[3].col + 1;
     tetris[elements].segments[3].row = tetris[elements].segments[3].row + 1;
 };
+
